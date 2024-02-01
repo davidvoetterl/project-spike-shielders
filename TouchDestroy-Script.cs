@@ -17,7 +17,7 @@ public class TouchDestroy : MonoBehaviour
     private static int leftDestroyCounter = 0;  // Counter for destroyed game objects on the left side
     private static int rightDestroyCounter = 0; // Counter for destroyed game objects on the right side
 
-    // Referenz auf das Timer-Skript
+    // ref to timer script
     public Timer timerScript;
 
     void Start()

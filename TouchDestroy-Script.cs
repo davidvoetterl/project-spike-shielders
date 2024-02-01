@@ -7,12 +7,15 @@ public class TouchDestroy : MonoBehaviour
     public float resetHeight = 10f;  // Reset height for game object
     public float fixedZPosition = -1f;  // Fixed z position for respawn
 
+
     public TMP_Text leftCounterText;  
     public TMP_Text rightCounterText;
 
     public TMP_Text leftResultText;
     public TMP_Text rightResultText;
 
+    public GameObject game1Enemies; 
+    public GameObject game2Enemies; 
 
     private static int leftDestroyCounter = 0;  // Counter for destroyed game objects on the left side
     private static int rightDestroyCounter = 0; // Counter for destroyed game objects on the right side
@@ -74,22 +77,32 @@ public class TouchDestroy : MonoBehaviour
         if (!timerScript.timerRunning)
         {
             if (leftDestroyCounter > rightDestroyCounter)
-            {
+            {       
+                game2Enemies.SetActive(false);
+                game1Enemies.SetActive(false);
                 leftResultText.text = "Winner";
                 rightResultText.text= "Loser";
                 Debug.Log("Left side wins!");
+                Invoke("ResetCounters", 4f);
+                
             }
             else if (leftDestroyCounter < rightDestroyCounter)
             {
+                game2Enemies.SetActive(false);
+                game1Enemies.SetActive(false);
                 Debug.Log("Right side wins!");
                 leftResultText.text = "Loser";
                 rightResultText.text= "Winner";
+                Invoke("ResetCounters", 4f);
             }
             else
             {
+                game2Enemies.SetActive(false);
+                game1Enemies.SetActive(false);
                 Debug.Log("It's a tie!");
                 leftResultText.text = "Tie";
                 rightResultText.text= "Tie";
+                Invoke("ResetCounters", 4f);
             }
         }
     }
@@ -127,7 +140,7 @@ public class TouchDestroy : MonoBehaviour
         if (fallScript != null)
         {
             fallScript.enabled = true;
-            fallScript.fallSpeed *= 1.05f;
+            fallScript.fallSpeed *= 1.0215f;
         }
 
         Debug.Log("Old prefab reactivated successfully");
@@ -141,4 +154,12 @@ public class TouchDestroy : MonoBehaviour
         Debug.Log("Left Counter: " + leftCounterText.text);
         Debug.Log("Right Counter: " + rightCounterText.text);
     }
+
+    public void ResetCounters()
+    {
+        leftDestroyCounter = 0;
+        rightDestroyCounter = 0;
+        UpdateCounterText();
+    }
+
 }

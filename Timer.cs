@@ -9,34 +9,28 @@ public class Timer : MonoBehaviour
 
     public bool timerRunning = true;
 
-    void Update()
+    void SwitchToMainMenu()
+{
+    FindObjectOfType<SceneSwitcher>().SwitchToMainMenu();
+}
+
+void Update()
+{
+    if (timerRunning)
     {
-        if (timerRunning)
+        timeLeft -= Time.deltaTime; //keep timer running
+
+        // show timer
+        int seconds = Mathf.RoundToInt(timeLeft);
+        timerText.text = seconds.ToString();
+
+        if (timeLeft <= 0)
         {
-            timeLeft -= Time.deltaTime; //keep timer running
-
-            // show timer
-            int seconds = Mathf.RoundToInt(timeLeft);
-            timerText.text = seconds.ToString();
-
-            
-            if (timeLeft <= 0)
-            {
-
-                
-                Time.timeScale = 0f; // freeze game
-            
-               
-                timerRunning = false; //  stop timer
-
-                Invoke("SwitchToMainMenu", 3f);
-                Debug.Log("Switching to MainMenu");
-            }
+            FindObjectOfType<SceneSwitcher>().Invoke("SwitchToMainMenu", 3f);
+            Debug.Log("Switching to MainMenu");
+            Time.timeScale = 0f; // freeze game
+            timerRunning = false; //  stop timer
         }
     }
-
-    void SwitchToMainMenu()
-    {
-    SceneManager.LoadScene(0);     
-    }
+}
 }

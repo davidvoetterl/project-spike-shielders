@@ -39,7 +39,4 @@ public class Timer : MonoBehaviour
     {
     SceneManager.LoadScene(0);     
     }
-    
 }
-
-
